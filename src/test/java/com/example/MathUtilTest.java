@@ -140,7 +140,7 @@ public class MathUtilTest {
         int esperado = 3;
         int obtido = mdc(a, b);
 
-        assertTrue(mdc(a, mdc(b, c)) == mdc(mdc(a, b), c));
+        assertTrue(mdc(a, mdc(b, c)) == mdc(mdc(a, b), c) && mdc(mdc(a, b), c) == mdc(a, b, c));
     }
 
     @Test
@@ -154,13 +154,18 @@ public class MathUtilTest {
 
     @Test
     void testMdcNenhumValor() {
-        var exception = assertThrows(IllegalArgumentException.class, this::mdcSemParametros);
+        var exception = assertThrows(IllegalArgumentException.class, MathUtil::mdc);
         System.out.println(exception.getMessage());
     }
 
-    void mdcSemParametros() {
-        mdc();
+    @Test
+    void testMdcNull() {
+        var exception = assertThrows(NullPointerException.class, () -> mdc(null));
+        var msgEsperado = "É necessário passar um valor diferente de nulo";
+        assertEquals(msgEsperado, exception.getMessage());
     }
+
+
 }
 
 
